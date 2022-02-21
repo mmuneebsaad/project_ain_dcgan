@@ -38,7 +38,7 @@ import sys, os, glob, time, imageio
 from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img 
 #%%
 
-real_images= 'real.zip'
+real_images= 'orig_images.zip'
 
 with zipfile.ZipFile(real_images, "r") as zip_data:
     content_list = zip_data.namelist()

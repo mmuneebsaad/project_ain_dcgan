@@ -46,7 +46,7 @@ import sklearn; print('sklearn version: {}'.format(sklearn.__version__))
 print('tensorflow version: {}'.format(tensorflow.__version__))
 
 # Training images directory path
-train_normal    = glob.glob('train_images/*.jpg', recursive=True)
+train_normal    = glob.glob('orig_images/*.jpg', recursive=True)
 
 # Time Computation
 def _time(start, end): 

@@ -235,9 +235,9 @@ ngpu=1
 # Source files
 
 # real images
-real_images = 'real.zip'
+real_images = 'orig_images.zip'
 # generated images
-gen_images = 'gen.zip'
+gen_images = 'gen_images.zip'
 
 #generate directories for real and fake images
 os.makedirs("FID_real/folder", exist_ok=True)
