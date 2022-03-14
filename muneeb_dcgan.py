@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 ## Import the necessary libraries
-"""
-import sys, os, glob, time, imageio 
-import numpy as np, pandas as pd  
 
+import sys, os, time, imageio 
+import glob
+import numpy as np, pandas as pd  
+#os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import matplotlib.pyplot as plt 
 import matplotlib.animation as animation
-from IPython.display import HTML
+#from IPython.display import HTML
 
 from PIL import Image 
 
@@ -22,7 +24,8 @@ from tensorflow.keras.initializers import RandomNormal
 from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
 from tensorflow.keras.models import load_model
 
-"""## Cheik the versions """
+
+"""## Check the versions """
 
 # Python version
 print('Python version: {}'.format(sys.version))
@@ -46,7 +49,7 @@ import sklearn; print('sklearn version: {}'.format(sklearn.__version__))
 print('tensorflow version: {}'.format(tensorflow.__version__))
 
 # Training images directory path
-train_normal    = glob.glob('orig_images/*.jpg', recursive=True)
+train_normal = glob.glob('orig_images/*.jpg', recursive=True)
 
 # Time Computation
 def _time(start, end): 
@@ -242,7 +245,7 @@ def get_real_samples(dataset, n_samples):
     y = np.ones((n_samples, 1))
     return X, y
 
-# create and save a plot of generated images 
+# create results directory and save plots of generated images 
 def show_generated(generated, epoch, nrows=4, ncols=5):
     #[-1,1] -> [0,1] 
     # generated = (generated+1)/2 
@@ -251,9 +254,9 @@ def show_generated(generated, epoch, nrows=4, ncols=5):
     plt.figure(figsize=(10,10)) 
     for idx in range(nrows*ncols): 
         plt.subplot(nrows, ncols, idx+1) 
-        plt.imshow(generated[idx]) 
+        plt.imshow(generated[idx].astype('uint8')) 
         plt.axis('off') 
-    plt.savefig('image_at_epoch_{:04d}.png'.format(epoch+1)) 
+    plt.savefig('results/image_at_epoch_{:04d}.png'.format(epoch+1)) 
     plt.show() 
 
 # evaluate the discriminator and plot generated images 
@@ -270,9 +273,9 @@ def summarize_performance(epoch, g_model, d_model, dataset, latent_dim, n_sample
     print('> Accuracy at epoch %d [real: %.0f%%, fake: %.0f%%]'%(epoch+1, acc_real*100, acc_fake*100))
     # show plot 
     show_generated(x_fake, epoch)
-    filename = 'generator_model_%03d.h5' % (epoch + 1)
+    filename = 'results/generator_model_%03d.h5' % (epoch + 1)
     g_model.save(filename)
-    filename1 = 'discriminator_model_%03d.h5' % (epoch + 1)
+    filename1 = 'results/discriminator_model_%03d.h5' % (epoch + 1)
     d_model.save(filename1)    
     
 def plot_loss(loss):
@@ -366,7 +369,7 @@ XRay_fake = XRayFakeGenerator(generator, n_samples=1340)
 # SAVE TO ZIP FILE 
 import zipfile
 from skimage import img_as_ubyte
-output_path = zipfile.PyZipFile('gen_images.zip', mode='w')
+output_path = zipfile.PyZipFile('results/gen_images.zip', mode='w')
 
 XRay_generated = XRayFakeGenerator(n_samples=1340)
 for idx in range(XRay_generated.shape[0]):
