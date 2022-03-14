@@ -18,7 +18,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torchvision.models as models
 import matplotlib.animation as animation
-from IPython.display import HTML
+#from IPython.display import HTML
 from scipy import linalg
 from torch.nn.functional import adaptive_avg_pool2d
 from PIL import Image
